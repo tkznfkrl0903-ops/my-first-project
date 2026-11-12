@@ -4,13 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1930 : 무법의 시대</title>
-  <!-- 서부시대 및 빈티지 느낌을 살리는 구글 웹폰트 -->
   <link rel="preconnect" href="https://googleapis.com">
   <link rel="preconnect" href="https://gstatic.com" crossorigin>
   <link href="https://googleapis.com/css2?family=Black+Han+Sans&family=Cinzel+Decorative:wght@700;900&family=Noto+Serif+KR:wght@600;900&family=Rye&display=swap" rel="stylesheet">
   
   <style>
-    /* 기본 리셋 및 전체 황야 배경 설정 */
     * {
       margin: 0;
       padding: 0;
@@ -24,11 +22,9 @@
       overflow: hidden;
       font-family: 'Noto Serif KR', serif;
       color: #e6d5b8;
-      /* 1930년대 어둡고 거친 만주 황야 느낌의 다크 그라데이션 배경 */
       background: radial-gradient(circle at 50% 45%, #3a2718 0%, #1c120a 55%, #0c0704 100%);
     }
 
-    /* 모래 입자 및 바람 띠 캔버스 */
     #desert-canvas {
       position: fixed;
       top: 0;
@@ -39,7 +35,6 @@
       z-index: 1;
     }
 
-    /* 황야의 거친 빈티지 비네팅 오버레이 */
     .vignette {
       position: fixed;
       top: 0;
@@ -51,7 +46,6 @@
       z-index: 2;
     }
 
-    /* 상단 헤더 바 */
     header {
       position: relative;
       z-index: 20;
@@ -63,7 +57,6 @@
       background: linear-gradient(to bottom, rgba(12, 7, 4, 0.85), rgba(12, 7, 4, 0.2));
     }
 
-    /* 하단 금빛·청동빛 구분선 */
     header::after {
       content: "";
       position: absolute;
@@ -75,7 +68,6 @@
       box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
     }
 
-    /* 왼쪽 상단 타이틀 */
     .site-title {
       font-family: 'Rye', 'Black Han Sans', serif;
       font-size: clamp(1.3rem, 3vw, 2.1rem);
@@ -85,7 +77,6 @@
       cursor: pointer;
     }
 
-    /* 오른쪽 상단 햄버거 메뉴 버튼 (가로선 3개) */
     .hamburger-btn {
       width: 36px;
       height: 28px;
@@ -114,7 +105,6 @@
       transition: all 0.3s ease;
     }
 
-    /* 메인 중앙 영역 */
     main {
       position: relative;
       z-index: 10;
@@ -127,7 +117,6 @@
       padding: 15px 20px 30px;
     }
 
-    /* 현상금 수배서 컨테이너 */
     .poster-wrapper {
       position: relative;
       display: flex;
@@ -137,7 +126,6 @@
       max-height: 68vh;
     }
 
-    /* 수배서 이미지 */
     #wanted-poster {
       max-width: 100%;
       max-height: 68vh;
@@ -149,7 +137,6 @@
       transition: transform 0.1s ease;
     }
 
-    /* 수배서 타격 흔들림 애니메이션 */
     @keyframes posterImpactShake {
       0% { transform: translate(0, 0) rotate(0deg); }
       15% { transform: translate(-10px, 8px) rotate(-1.5deg); }
@@ -165,7 +152,6 @@
       animation: posterImpactShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     }
 
-    /* 동그라미 '시작' 도장 스타일 */
     .stamp-mark {
       position: absolute;
       top: 50%;
@@ -191,7 +177,6 @@
       text-shadow: 1px 1px 2px rgba(80, 0, 0, 0.6);
     }
 
-    /* 도장 내부 이중 원 테두리 */
     .stamp-mark::before {
       content: "";
       position: absolute;
@@ -203,7 +188,6 @@
       border-radius: 50%;
     }
 
-    /* 도장이 위에서 아래로 쾅 찍히는 애니메이션 */
     @keyframes stampSlam {
       0% {
         opacity: 0;
@@ -226,7 +210,6 @@
       animation: stampSlam 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
-    /* 수배서 아래 바깥 여백 버튼 그룹 (DEAD OR ALIVE 절대 가리지 않음) */
     .action-buttons {
       margin-top: 22px;
       display: flex;
@@ -264,7 +247,6 @@
       transform: translateY(1px);
     }
 
-    /* 사이드 메뉴 어두운 배경 오버레이 */
     .menu-overlay {
       position: fixed;
       top: 0;
@@ -284,7 +266,6 @@
       visibility: visible;
     }
 
-    /* 오른쪽 햄버거 사이드 메뉴 패널 */
     nav.side-menu {
       position: fixed;
       top: 0;
@@ -369,7 +350,6 @@
       padding-left: 22px;
     }
 
-    /* 오른쪽 하단 배경음악(BGM) 토글 버튼 */
     .bgm-toggle-btn {
       position: fixed;
       bottom: 22px;
@@ -388,3 +368,29 @@
       transition: all 0.2s ease;
     }
 
+    .bgm-toggle-btn:hover {
+      background: rgba(58, 36, 18, 0.95);
+      border-color: #f3d06b;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 14px 20px;
+      }
+      .poster-wrapper {
+        max-height: 60vh;
+      }
+      #wanted-poster {
+        max-height: 60vh;
+      }
+      .action-buttons {
+        margin-top: 16px;
+        gap: 12px;
+      }
+      .western-btn {
+        padding: 11px 20px;
+        font-size: 0.95rem;
+      }
+      .bgm-toggle-btn {
+        bottom: 14px;
