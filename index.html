@@ -43,8 +43,6 @@ header{position:fixed;top:0;left:0;width:100%;height:65px;background:rgba(18,14,
 .sec h2{font-size:1.9rem;color:#d4af37;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #5e472c}
 .sec p{line-height:1.75;color:#cbbba0;margin-bottom:16px}
 .card{background:#1c1610;border:1px solid #8c6d46;color:#e6d8c3;padding:20px;line-height:1.7;white-space:pre-wrap}
-
-/* 캐릭터 필터 버튼 & 그리드 */
 .f-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .f-btn{background:#1c1610;color:#cbbba0;border:1px solid #5e472c;padding:9px 16px;border-radius:4px;font-size:.88rem;font-weight:bold;cursor:pointer}
 .f-btn.active,.f-btn:hover{background:#d4af37;color:#120e0a;border-color:#d4af37}
@@ -54,7 +52,6 @@ header{position:fixed;top:0;left:0;width:100%;height:65px;background:rgba(18,14,
 .c-tag{display:inline-block;font-size:.75rem;color:#120e0a;background:#d4af37;padding:2px 8px;border-radius:3px;font-weight:bold;margin-bottom:6px}
 .c-card h3{font-size:1.15rem;color:#f5ebd9;margin-bottom:6px}
 .c-card p{font-size:.88rem;line-height:1.5;color:#a89982;margin:0}
-
 .music{position:fixed;bottom:22px;right:22px;background:#241b13;color:#d4af37;border:1px solid #d4af37;padding:12px 18px;border-radius:30px;font-size:.85rem;font-weight:bold;cursor:pointer;z-index:8500;box-shadow:0 5px 15px rgba(0,0,0,0.8)}
 .music.on{background:#d4af37;color:#120e0a}
 @media(max-width:850px){.hero{flex-direction:column-reverse;gap:30px}.title{font-size:2.1rem}.right{align-items:center;width:100%}}
@@ -107,11 +104,9 @@ header{position:fixed;top:0;left:0;width:100%;height:65px;background:rgba(18,14,
 <section id="s2" class="sec"><div class="inner"><h2>프롤로그 웹툰</h2><p>프롤로그 웹툰 이미지를 배치하는 공간입니다.</p></div></section>
 <section id="s3" class="sec"><div class="inner"><h2>세력</h2><p>보석을 노리는 주요 조직과 세력 소개 공간입니다.</p></div></section>
 
-<!-- 4. 등장인물 (최상단 세력별 분류 버튼 포함) -->
 <section id="s4" class="sec">
   <div class="inner">
     <h2>등장인물</h2>
-    <!-- 세력 필터 버튼 6개 -->
     <div class="f-btns">
       <button type="button" class="f-btn active" onclick="filt('all',this)">전체</button>
       <button type="button" class="f-btn" onclick="filt('보안관',this)">보안관</button>
@@ -120,8 +115,6 @@ header{position:fixed;top:0;left:0;width:100%;height:65px;background:rgba(18,14,
       <button type="button" class="f-btn" onclick="filt('중국',this)">중국</button>
       <button type="button" class="f-btn" onclick="filt('무세력',this)">무세력</button>
     </div>
-
-    <!-- 캐릭터 카드 목록 (data-role에 소속을 적으면 버튼과 자동 연결됩니다) -->
     <div class="c-grid">
       <div class="c-card" data-role="보안관">
         <img src="wanted.png.jpg" alt="캐릭터1">
@@ -144,9 +137,3 @@ function closeM(){document.getElementById('sb').style.right='-280px';document.ge
 function getC(){if(!ctx){var A=window.AudioContext||window.webkitAudioContext;if(A)ctx=new A()}if(ctx&&ctx.state==='suspended')ctx.resume();return ctx}
 function sound(){try{var c=getC();if(!c)return;var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.setValueAtTime(140,c.currentTime);o.frequency.exponentialRampToValueAtTime(35,c.currentTime+.15);g.gain.setValueAtTime(1,c.currentTime);g.gain.exponentialRampToValueAtTime(.01,c.currentTime+.18);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.18)}catch(e){}}
 function go(id){closeM();var t=document.getElementById(id);if(!stamped){stamped=true;document.getElementById('st').classList.add('on');sound();setTimeout(function(){if(t)t.scrollIntoView({behavior:'smooth'})},550)}else{if(t)t.scrollIntoView({behavior:'smooth'})}}
-
-/* 캐릭터 세력 필터 기능 */
-function filt(role,btn){
-  var bs=document.querySelectorAll('.f-btn');
-  for(var i=0;i<bs.length;i++)bs[i].classList.remove('active');
-  btn.classList.add('active');
