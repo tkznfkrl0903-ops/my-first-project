@@ -35,7 +35,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
-      z-index: 1000;
+      z-index: 2000;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
     }
 
@@ -56,10 +56,10 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 28px;
-      height: 20px;
+      width: 30px;
+      height: 22px;
       padding: 0;
-      z-index: 1100;
+      z-index: 2100;
     }
 
     .hamburger-btn span {
@@ -68,10 +68,9 @@
       height: 3px;
       background-color: #d4af37;
       border-radius: 2px;
-      transition: all 0.3s ease;
     }
 
-    /* 선 3개 눌렀을 때 펼쳐지는 드롭다운 메뉴 */
+    /* 선 3개 눌렀을 때 펼쳐지는 메뉴 */
     .dropdown-menu {
       position: fixed;
       top: 65px;
@@ -82,7 +81,7 @@
       border-bottom: 2px solid #8c6d46;
       display: none;
       flex-direction: column;
-      z-index: 1050;
+      z-index: 2050;
       box-shadow: -5px 10px 20px rgba(0, 0, 0, 0.9);
     }
 
@@ -97,7 +96,6 @@
       font-size: 1.1rem;
       font-weight: bold;
       border-bottom: 1px solid #3d2e1e;
-      transition: background-color 0.2s, color 0.2s;
     }
 
     .dropdown-menu a:last-child {
@@ -135,26 +133,42 @@
       width: 90%;
     }
 
-    .poster-img {
+    .poster-box {
+      position: relative;
       width: 100%;
-      height: auto;
+      min-height: 380px;
+      background-color: #1f1710;
       border: 5px solid #4a3520;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
       border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
 
+    .poster-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 버튼 영역: 클릭이 절대 막히지 않도록 최상위 레이어 설정 */
     .action-buttons {
+      position: relative;
       display: flex;
       gap: 15px;
-      margin-top: 22px;
-      z-index: 10;
+      margin-top: 25px;
+      z-index: 500;
       width: 100%;
       justify-content: center;
     }
 
     .btn-1930 {
-      padding: 12px 20px;
-      font-size: 1rem;
+      position: relative;
+      z-index: 501;
+      padding: 14px 20px;
+      font-size: 1.05rem;
       font-weight: bold;
       color: #120e0a;
       background-color: #d4af37;
@@ -162,13 +176,13 @@
       border-radius: 4px;
       cursor: pointer;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-      transition: transform 0.2s, background-color 0.2s;
       flex: 1;
-      max-width: 160px;
+      max-width: 170px;
+      touch-action: manipulation;
     }
 
-    .btn-1930:hover {
-      background-color: #f0c94d;
+    .btn-1930:active {
+      transform: scale(0.96);
     }
 
     .btn-1930.secondary {
@@ -176,10 +190,10 @@
       color: #e6d8c3;
     }
 
-    /* 3. 네모 도장 애니메이션 */
+    /* 3. 네모 도장 애니메이션 (클릭 방해 금지 설정) */
     .stamp {
       position: absolute;
-      top: 40%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(3) rotate(-12deg);
       border: 5px solid #b81d13;
@@ -191,7 +205,7 @@
       background-color: rgba(184, 29, 19, 0.15);
       opacity: 0;
       pointer-events: none;
-      z-index: 20;
+      z-index: 100;
       white-space: nowrap;
     }
 
@@ -260,9 +274,9 @@
       font-size: 0.95rem;
       font-weight: bold;
       cursor: pointer;
-      z-index: 2000;
+      z-index: 3000;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
-      transition: all 0.2s;
+      touch-action: manipulation;
     }
 
     .music-toggle.playing {
@@ -276,8 +290,7 @@
   <!-- 상단 고정 헤더 -->
   <header>
     <div class="logo">1930: 무법의 시대</div>
-    <!-- 선 3개 메뉴 버튼 -->
-    <button class="hamburger-btn" onclick="toggleMenu()" aria-label="메뉴 열기">
+    <button type="button" class="hamburger-btn" id="menu-btn" aria-label="메뉴 열기">
       <span></span>
       <span></span>
       <span></span>
@@ -286,21 +299,22 @@
 
   <!-- 선 3개 누르면 나오는 메뉴 3개 -->
   <nav id="dropdown-menu" class="dropdown-menu">
-    <a href="#main-section" onclick="closeMenu()">현상수배</a>
-    <a href="#prompt-section" onclick="closeMenu()">프롬프트</a>
-    <a href="#character-section" onclick="closeMenu()">캐릭터</a>
+    <a href="#main-section" class="menu-link">현상수배</a>
+    <a href="#prompt-section" class="menu-link">프롬프트</a>
+    <a href="#character-section" class="menu-link">캐릭터</a>
   </nav>
 
   <!-- 1번 화면: 정중앙 현상수배서 포스터 -->
   <section id="main-section">
     <div class="poster-wrapper">
-      <img src="poster.png" alt="현상수배서 포스터" class="poster-img">
-      
-      <div id="stamp-box" class="stamp">수배 개시</div>
+      <div class="poster-box">
+        <img src="poster.png" alt="현상수배서 포스터" class="poster-img">
+        <div id="stamp-box" class="stamp">수배 개시</div>
+      </div>
 
       <div class="action-buttons">
-        <button class="btn-1930" onclick="triggerStampAndScroll('prompt-section')">프롬프트 열기</button>
-        <button class="btn-1930 secondary" onclick="triggerStampAndScroll('character-section')">캐릭터 보기</button>
+        <button type="button" class="btn-1930" id="btn-prompt">프롬프트 열기</button>
+        <button type="button" class="btn-1930 secondary" id="btn-character">캐릭터 보기</button>
       </div>
     </div>
   </section>
@@ -327,77 +341,67 @@
   </section>
 
   <!-- 오른쪽 하단 고정 음악 버튼 -->
-  <button id="music-btn" class="music-toggle" onclick="toggleMusic()">🔇 음악 켜기</button>
+  <button type="button" id="music-btn" class="music-toggle">🔇 음악 켜기</button>
 
   <script>
-    // 1. 햄버거(선 3개) 메뉴 열기/닫기
+    // 1. 메뉴 버튼 연결
+    const menuBtn = document.getElementById('menu-btn');
     const dropdownMenu = document.getElementById('dropdown-menu');
 
-    function toggleMenu() {
+    menuBtn.addEventListener('click', function() {
       dropdownMenu.classList.toggle('open');
-    }
+    });
 
-    function closeMenu() {
-      dropdownMenu.classList.remove('open');
-    }
+    document.querySelectorAll('.menu-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        dropdownMenu.classList.remove('open');
+      });
+    });
 
-    // 2. 오디오 컨텍스트 (도장 소리 & 배경음악 공용)
+    // 2. 오디오 초기화 (에러가 나도 나머지 기능은 정상 작동하도록 보호)
     let audioCtx = null;
 
     function initAudio() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-    }
-
-    // 도장 찍히는 소리
-    function playStampSound() {
-      initAudio();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.15);
-
-      gain.gain.setValueAtTime(1, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.18);
-    }
-
-    // 버튼 클릭 시 도장 찍기 + 아래로 휠 이동
-    function triggerStampAndScroll(targetId) {
-      closeMenu();
-      const stamp = document.getElementById('stamp-box');
-      
-      stamp.classList.remove('stamped');
-      void stamp.offsetWidth;
-      stamp.classList.add('stamped');
-
-      playStampSound();
-
-      setTimeout(() => {
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth' });
+      try {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            audioCtx = new AudioContext();
+          }
         }
-      }, 600);
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      } catch (e) {
+        console.log('Audio init skipped:', e);
+      }
     }
 
-    // 3. 음악 켜기 / 끄기 (외부 파일 차단 없는 1930년대 느와르 재즈 코드 루프)
-    let isPlaying = false;
-    let bgmInterval = null;
-    const musicBtn = document.getElementById('music-btn');
+    function playStampSound() {
+      try {
+        initAudio();
+        if (!audioCtx) return;
 
-    // 어둡고 분위기 있는 1930년대 재즈 코드 진행 (Dm9 -> G13 -> Cmaj9 -> A7b9)
-    const chords = [
-      [146.83, 174.61, 220.00, 261.63, 329.63], // Dm9
-      [196.00, 246.94, 349.23, 440.00, 659.25], // G13
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.15);
+
+        gain.gain.setValueAtTime(1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.18);
+      } catch (e) {
+        console.log('Stamp sound skipped:', e);
+      }
+    }
+
+    // 3. 프롬프트 열기 & 캐릭터 보기 버튼 이벤트 직접 연결
+    function handleAction(targetId) {
+      dropdownMenu.classList.remove('open');
