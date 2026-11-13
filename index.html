@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>1930: 무법의 시대</title>
+  <!-- 감성적인 명조체(Noto Serif KR) 로드 -->
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
   <style>
     * {
       margin: 0;
@@ -16,9 +21,9 @@
     }
 
     body {
-      background-color: #120e0a;
-      color: #e6d8c3;
-      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', serif;
+      background-color: #f4f1ea; /* 시안과 같은 따뜻한 미색 종이 배경 */
+      color: #1c1b18;
+      font-family: 'Noto Sans KR', sans-serif;
       overflow-x: hidden;
     }
 
@@ -28,31 +33,48 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 65px;
-      background-color: rgba(18, 14, 10, 0.96);
-      border-bottom: 2px solid #8c6d46;
+      height: 70px;
+      background-color: rgba(244, 241, 234, 0.94);
+      border-bottom: 1px solid #d5cfc2; /* 상단 고정 선 */
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
-      z-index: 3000;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.85);
+      padding: 0 5%;
+      z-index: 9000;
+      backdrop-filter: blur(5px);
     }
 
-    .logo {
-      font-size: 1.25rem;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-      color: #d4af37;
-      text-shadow: 2px 2px 4px #000;
-      white-space: nowrap;
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #1c1b18;
     }
 
-    /* 오른쪽 상단 선 3개(햄버거) 버튼 - 절대 사라지지 않도록 고정 */
+    .logo-icon {
+      font-size: 1.2rem;
+      color: #8c7a5b;
+    }
+
+    .logo-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      color: #7d776c;
+      display: block;
+      font-weight: 400;
+    }
+
+    /* 우측 상단 선 3개 메뉴 버튼 */
     .hamburger-btn {
-      position: relative;
       background: transparent;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      border: 1px solid #c7c0b2;
       border-radius: 4px;
       cursor: pointer;
       display: flex;
@@ -60,199 +82,284 @@
       justify-content: space-between;
       width: 38px;
       height: 34px;
-      padding: 7px 6px;
-      z-index: 3100;
-      touch-action: manipulation;
+      padding: 8px 7px;
+      z-index: 9100;
     }
 
     .hamburger-btn span {
       display: block;
       width: 100%;
-      height: 3px;
-      background-color: #d4af37;
-      border-radius: 2px;
-      pointer-events: none;
+      height: 2px;
+      background-color: #1c1b18;
     }
 
-    /* 2. 오른쪽에서 열리는 사이드창 메뉴 */
+    /* 2. 오른쪽에서 열리는 사이드창 */
     .sidebar-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.65);
+      background-color: rgba(28, 27, 24, 0.45);
       display: none;
-      z-index: 3500;
-    }
-
-    .sidebar-overlay.open {
-      display: block;
+      z-index: 9500;
     }
 
     .sidebar {
       position: fixed;
       top: 0;
-      right: -270px;
-      width: 260px;
+      right: -280px;
+      width: 270px;
       height: 100vh;
-      background-color: #18120d;
-      border-left: 2px solid #8c6d46;
+      background-color: #f4f1ea;
+      border-left: 1px solid #d5cfc2;
       display: flex;
       flex-direction: column;
-      padding-top: 20px;
-      z-index: 4000;
+      padding-top: 22px;
+      z-index: 9900;
       transition: right 0.3s ease;
-      box-shadow: -8px 0 25px rgba(0, 0, 0, 0.95);
-    }
-
-    .sidebar.open {
-      right: 0;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.12);
     }
 
     .sidebar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px 18px;
-      border-bottom: 1px solid #5e472c;
+      padding: 0 24px 18px;
+      border-bottom: 1px solid #d5cfc2;
     }
 
     .sidebar-title {
-      color: #d4af37;
-      font-weight: bold;
-      font-size: 1.1rem;
+      font-family: 'Noto Serif KR', serif;
+      color: #8c7a5b;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
     }
 
     .close-sidebar-btn {
       background: none;
       border: none;
-      color: #d4af37;
-      font-size: 1.6rem;
+      color: #1c1b18;
+      font-size: 1.7rem;
       line-height: 1;
       cursor: pointer;
-      padding: 4px 8px;
     }
 
     .sidebar-links {
       display: flex;
       flex-direction: column;
-      margin-top: 10px;
     }
 
     .sidebar-links a {
       padding: 18px 24px;
       text-decoration: none;
-      color: #e6d8c3;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-bottom: 1px solid #2e2216;
-      transition: background-color 0.2s, color 0.2s;
+      color: #1c1b18;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-bottom: 1px solid #e6e0d4;
+      transition: background-color 0.2s, padding-left 0.2s;
     }
 
-    .sidebar-links a:hover, .sidebar-links a:active {
-      background-color: #3a2a1d;
-      color: #d4af37;
+    .sidebar-links a:hover {
+      background-color: #eae4d7;
+      padding-left: 30px;
     }
 
-    /* 섹션 공통 레이아웃 */
-    section {
-      min-height: 100vh;
-      padding: 85px 15px 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      border-bottom: 1px dashed #3d2e1e;
-    }
-
-    /* 3. 메인 섹션: 정중앙 현상수배서 포스터 */
+    /* 3. 메인 히어로 섹션 (좌측 텍스트 + 우측 이미지 배치) */
     #main-section {
-      background: radial-gradient(circle, #261d15 0%, #120e0a 100%);
+      min-height: 100vh;
+      padding: 110px 6% 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-bottom: 1px solid #e0dad0;
     }
 
-    .poster-wrapper {
-      position: relative;
+    .hero-container {
+      max-width: 1150px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+    }
+
+    /* 왼쪽 영역: 경성 스토리 타이포그래피 & 버튼 */
+    .hero-left {
+      flex: 1.1;
+      text-align: left;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      letter-spacing: 2.5px;
+      color: #8c7a5b;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+
+    .eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background-color: #8c7a5b;
+    }
+
+    .hero-sub-lead {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.15rem;
+      color: #5c564c;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    .hero-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 3.1rem;
+      line-height: 1.32;
+      font-weight: 700;
+      color: #1c1b18;
+      margin-bottom: 26px;
+      letter-spacing: -1px;
+    }
+
+    .hero-desc {
+      font-size: 0.98rem;
+      line-height: 1.8;
+      color: #666055;
+      margin-bottom: 38px;
+      word-break: keep-all;
+    }
+
+    .hero-buttons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background-color: #1c1b18;
+      color: #f4f1ea;
+      border: 1px solid #1c1b18;
+      padding: 15px 28px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover {
+      background-color: #38352f;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: #1c1b18;
+      border: 1px solid #c7c0b2;
+      padding: 15px 26px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: #1c1b18;
+      background-color: #eae4d7;
+    }
+
+    /* 오른쪽 영역: 사진 & 캡션 & 도장 */
+    .hero-right {
+      flex: 0.9;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      max-width: 400px;
-      width: 90%;
+      align-items: flex-end;
+      position: relative;
     }
 
-    .poster-box {
+    .photo-frame-wrap {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .photo-box {
       position: relative;
       width: 100%;
-      min-height: 360px;
-      background-color: #1f1710;
-      border: 5px solid #4a3520;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
-      border-radius: 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-color: #e6e0d4;
+      box-shadow: 0 20px 45px rgba(28, 27, 24, 0.12);
       overflow: hidden;
     }
 
-    .poster-img {
+    .photo-box img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    .action-buttons {
-      position: relative;
-      display: flex;
-      gap: 15px;
-      margin-top: 25px;
-      z-index: 500;
+    /* 시안 우측 세로 영문 텍스트 */
+    .vertical-tag {
+      writing-mode: vertical-rl;
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      color: #9e9689;
+      padding-top: 6px;
+      user-select: none;
+    }
+
+    /* 시안 사진 아래 캡션 */
+    .photo-caption {
       width: 100%;
-      justify-content: center;
+      max-width: 420px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding-right: 22px;
+      font-size: 0.75rem;
+      color: #7d776c;
+      letter-spacing: 1px;
     }
 
-    .btn-1930 {
-      position: relative;
-      z-index: 501;
-      padding: 14px 18px;
-      font-size: 1.05rem;
-      font-weight: bold;
-      color: #120e0a;
-      background-color: #d4af37;
-      border: 2px solid #8c6d46;
-      border-radius: 4px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-      flex: 1;
-      max-width: 170px;
-      touch-action: manipulation;
+    .photo-caption .dot {
+      color: #9e2a2b;
+      margin-right: 6px;
     }
 
-    .btn-1930:active {
-      transform: scale(0.96);
-    }
-
-    .btn-1930.secondary {
-      background-color: #3a2a1d;
-      color: #e6d8c3;
-    }
-
-    /* 4. 네모 도장 애니메이션 (단 1회만 찍힘) */
+    /* 네모 도장 (1회만 찍힘) */
     .stamp {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(3) rotate(-12deg);
-      border: 5px solid #b81d13;
-      color: #b81d13;
-      font-size: 2.3rem;
+      border: 4px solid #a61c1c;
+      color: #a61c1c;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.1rem;
       font-weight: 900;
-      padding: 8px 24px;
+      padding: 8px 22px;
       letter-spacing: 4px;
-      background-color: rgba(184, 29, 19, 0.15);
+      background-color: rgba(244, 241, 234, 0.75);
       opacity: 0;
       pointer-events: none;
-      z-index: 100;
       white-space: nowrap;
     }
 
@@ -275,150 +382,74 @@
       }
     }
 
-    /* 5. 각 섹션 박스 스타일 */
-    .content-box {
-      max-width: 750px;
-      width: 95%;
-      background-color: #1c1610;
-      border: 2px solid #5e472c;
-      padding: 30px 20px;
-      border-radius: 6px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    /* 하단 SCROLL TO EXPLORE 문구 */
+    .scroll-hint {
+      position: absolute;
+      bottom: 24px;
+      left: 6%;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: #8c7a5b;
     }
 
-    .content-box h2 {
-      color: #d4af37;
-      font-size: 1.6rem;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #5e472c;
-      padding-bottom: 10px;
+    /* 4. 아래 콘텐츠 섹션들 (세계관, 웹툰, 세력, 등장인물, 신비의 보석) */
+    .content-section {
+      min-height: 90vh;
+      padding: 100px 6%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #e0dad0;
     }
 
-    .prompt-area {
-      background-color: #120e0a;
-      border: 1px solid #8c6d46;
-      padding: 18px;
-      color: #cbbba0;
-      font-family: monospace;
-      text-align: left;
-      line-height: 1.6;
-      margin-top: 15px;
+    .section-inner {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      color: #8c7a5b;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .section-inner h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.1rem;
+      color: #1c1b18;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #d5cfc2;
+    }
+
+    .section-inner p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #4f4a41;
+      margin-bottom: 20px;
+    }
+
+    .prompt-card {
+      background-color: #ebe6dc;
+      border: 1px solid #d5cfc2;
+      padding: 24px;
+      font-family: 'Noto Serif KR', serif;
+      line-height: 1.8;
+      color: #2b2925;
       white-space: pre-wrap;
-      font-size: 0.95rem;
     }
 
-    /* 6. 우측 하단 고정 음악 버튼 */
+    /* 5. 우측 하단 고정 음악 버튼 */
     .music-toggle {
       position: fixed;
-      bottom: 25px;
-      right: 20px;
-      background-color: #2b2016;
-      color: #d4af37;
-      border: 2px solid #d4af37;
+      bottom: 24px;
+      right: 24px;
+      background-color: #1c1b18;
+      color: #f4f1ea;
+      border: 1px solid #1c1b18;
       padding: 12px 18px;
       border-radius: 30px;
-      font-size: 0.95rem;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 3200;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
-      touch-action: manipulation;
-    }
-
-    .music-toggle.playing {
-      background-color: #d4af37;
-      color: #120e0a;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- 상단 고정 헤더 -->
-  <header>
-    <div class="logo">1930: 무법의 시대</div>
-    <button type="button" class="hamburger-btn" id="menu-btn" aria-label="메뉴 열기">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </header>
-
-  <!-- 사이드창 배경 어둡게 처리 -->
-  <div id="sidebar-overlay" class="sidebar-overlay"></div>
-
-  <!-- 오른쪽에서 열리는 사이드창 (요청하신 순서 5개) -->
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-header">
-      <span class="sidebar-title">MENU</span>
-      <button type="button" id="close-sidebar" class="close-sidebar-btn" aria-label="메뉴 닫기">&times;</button>
-    </div>
-    <nav class="sidebar-links">
-      <a href="#world-section" class="menu-link">세계관</a>
-      <a href="#webtoon-section" class="menu-link">프롤로그 웹툰</a>
-      <a href="#faction-section" class="menu-link">세력</a>
-      <a href="#character-section" class="menu-link">등장인물</a>
-      <a href="#gem-section" class="menu-link">신비의 보석</a>
-    </nav>
-  </aside>
-
-  <!-- 메인 화면: 정중앙 현상수배서 포스터 -->
-  <section id="main-section">
-    <div class="poster-wrapper">
-      <div class="poster-box">
-        <img src="poster.png" alt="현상수배서 포스터" class="poster-img">
-        <div id="stamp-box" class="stamp">수배 개시</div>
-      </div>
-
-      <div class="action-buttons">
-        <button type="button" class="btn-1930" id="btn-prompt">프롬프트 열기</button>
-        <button type="button" class="btn-1930 secondary" id="btn-character">캐릭터 보기</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 1. 세계관 (프롬프트 영역) -->
-  <section id="world-section">
-    <div class="content-box">
-      <h2>세계관 & 프롬프트</h2>
-      <p>1930년대 무법의 시대를 배경으로 한 설정과 프롬프트 공간입니다.</p>
-      <div class="prompt-area" id="prompt-text">[1930: 무법의 시대]
-이곳에 원하시는 세계관 및 프롬프트 내용을 입력해 주세요.</div>
-    </div>
-  </section>
-
-  <!-- 2. 프롤로그 웹툰 -->
-  <section id="webtoon-section">
-    <div class="content-box">
-      <h2>프롤로그 웹툰</h2>
-      <p>프롤로그 웹툰 이미지나 이야기를 배치하는 공간입니다.</p>
-    </div>
-  </section>
-
-  <!-- 3. 세력 -->
-  <section id="faction-section">
-    <div class="content-box">
-      <h2>세력</h2>
-      <p>무법의 시대를 지배하는 주요 조직과 세력 소개 공간입니다.</p>
-    </div>
-  </section>
-
-  <!-- 4. 등장인물 -->
-  <section id="character-section">
-    <div class="content-box">
-      <h2>등장인물</h2>
-      <p>주요 등장인물과 현상수배 전단입니다.</p>
-      <div style="margin-top: 20px;">
-        <img src="wanted.png.jpg" alt="캐릭터 이미지" style="max-width: 100%; width: 280px; border: 3px solid #8c6d46;">
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. 신비의 보석 -->
-  <section id="gem-section">
-    <div class="content-box">
-      <h2>신비의 보석</h2>
-      <p>모든 세력이 노리는 신비의 보석에 대한 비밀을 담는 공간입니다.</p>
-    </div>
-  </section>
-
+      font-size: 0.85rem;
