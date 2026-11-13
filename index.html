@@ -29,14 +29,14 @@
       left: 0;
       width: 100%;
       height: 65px;
-      background-color: rgba(18, 14, 10, 0.95);
+      background-color: rgba(18, 14, 10, 0.96);
       border-bottom: 2px solid #8c6d46;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
-      z-index: 2000;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+      z-index: 3000;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.85);
     }
 
     .logo {
@@ -48,18 +48,21 @@
       white-space: nowrap;
     }
 
-    /* 오른쪽 상단 선 3개(햄버거) 버튼 */
+    /* 오른쪽 상단 선 3개(햄버거) 버튼 - 절대 사라지지 않도록 고정 */
     .hamburger-btn {
-      background: none;
-      border: none;
+      position: relative;
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 4px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 30px;
-      height: 22px;
-      padding: 0;
-      z-index: 2100;
+      width: 38px;
+      height: 34px;
+      padding: 7px 6px;
+      z-index: 3100;
+      touch-action: manipulation;
     }
 
     .hamburger-btn span {
@@ -68,41 +71,86 @@
       height: 3px;
       background-color: #d4af37;
       border-radius: 2px;
+      pointer-events: none;
     }
 
-    /* 선 3개 눌렀을 때 펼쳐지는 메뉴 */
-    .dropdown-menu {
+    /* 2. 오른쪽에서 열리는 사이드창 메뉴 */
+    .sidebar-overlay {
       position: fixed;
-      top: 65px;
-      right: 0;
-      width: 200px;
-      background-color: rgba(24, 18, 13, 0.98);
-      border-left: 2px solid #8c6d46;
-      border-bottom: 2px solid #8c6d46;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.65);
       display: none;
-      flex-direction: column;
-      z-index: 2050;
-      box-shadow: -5px 10px 20px rgba(0, 0, 0, 0.9);
+      z-index: 3500;
     }
 
-    .dropdown-menu.open {
+    .sidebar-overlay.open {
+      display: block;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -270px;
+      width: 260px;
+      height: 100vh;
+      background-color: #18120d;
+      border-left: 2px solid #8c6d46;
       display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+      z-index: 4000;
+      transition: right 0.3s ease;
+      box-shadow: -8px 0 25px rgba(0, 0, 0, 0.95);
     }
 
-    .dropdown-menu a {
-      padding: 16px 24px;
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px 18px;
+      border-bottom: 1px solid #5e472c;
+    }
+
+    .sidebar-title {
+      color: #d4af37;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .close-sidebar-btn {
+      background: none;
+      border: none;
+      color: #d4af37;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+    }
+
+    .sidebar-links a {
+      padding: 18px 24px;
       text-decoration: none;
       color: #e6d8c3;
       font-size: 1.1rem;
       font-weight: bold;
-      border-bottom: 1px solid #3d2e1e;
+      border-bottom: 1px solid #2e2216;
+      transition: background-color 0.2s, color 0.2s;
     }
 
-    .dropdown-menu a:last-child {
-      border-bottom: none;
-    }
-
-    .dropdown-menu a:hover, .dropdown-menu a:active {
+    .sidebar-links a:hover, .sidebar-links a:active {
       background-color: #3a2a1d;
       color: #d4af37;
     }
@@ -119,7 +167,7 @@
       border-bottom: 1px dashed #3d2e1e;
     }
 
-    /* 2. 메인 섹션: 정중앙 현상수배서 포스터 */
+    /* 3. 메인 섹션: 정중앙 현상수배서 포스터 */
     #main-section {
       background: radial-gradient(circle, #261d15 0%, #120e0a 100%);
     }
@@ -136,7 +184,7 @@
     .poster-box {
       position: relative;
       width: 100%;
-      min-height: 380px;
+      min-height: 360px;
       background-color: #1f1710;
       border: 5px solid #4a3520;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
@@ -153,7 +201,6 @@
       display: block;
     }
 
-    /* 버튼 영역: 클릭이 절대 막히지 않도록 최상위 레이어 설정 */
     .action-buttons {
       position: relative;
       display: flex;
@@ -167,7 +214,7 @@
     .btn-1930 {
       position: relative;
       z-index: 501;
-      padding: 14px 20px;
+      padding: 14px 18px;
       font-size: 1.05rem;
       font-weight: bold;
       color: #120e0a;
@@ -190,7 +237,7 @@
       color: #e6d8c3;
     }
 
-    /* 3. 네모 도장 애니메이션 (클릭 방해 금지 설정) */
+    /* 4. 네모 도장 애니메이션 (단 1회만 찍힘) */
     .stamp {
       position: absolute;
       top: 50%;
@@ -228,7 +275,7 @@
       }
     }
 
-    /* 4. 프롬프트 & 캐릭터 섹션 */
+    /* 5. 각 섹션 박스 스타일 */
     .content-box {
       max-width: 750px;
       width: 95%;
@@ -261,7 +308,7 @@
       font-size: 0.95rem;
     }
 
-    /* 5. 우측 하단 고정 음악 버튼 */
+    /* 6. 우측 하단 고정 음악 버튼 */
     .music-toggle {
       position: fixed;
       bottom: 25px;
@@ -274,7 +321,7 @@
       font-size: 0.95rem;
       font-weight: bold;
       cursor: pointer;
-      z-index: 3000;
+      z-index: 3200;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
       touch-action: manipulation;
     }
@@ -297,14 +344,25 @@
     </button>
   </header>
 
-  <!-- 선 3개 누르면 나오는 메뉴 3개 -->
-  <nav id="dropdown-menu" class="dropdown-menu">
-    <a href="#main-section" class="menu-link">현상수배</a>
-    <a href="#prompt-section" class="menu-link">프롬프트</a>
-    <a href="#character-section" class="menu-link">캐릭터</a>
-  </nav>
+  <!-- 사이드창 배경 어둡게 처리 -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
-  <!-- 1번 화면: 정중앙 현상수배서 포스터 -->
+  <!-- 오른쪽에서 열리는 사이드창 (요청하신 순서 5개) -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">MENU</span>
+      <button type="button" id="close-sidebar" class="close-sidebar-btn" aria-label="메뉴 닫기">&times;</button>
+    </div>
+    <nav class="sidebar-links">
+      <a href="#world-section" class="menu-link">세계관</a>
+      <a href="#webtoon-section" class="menu-link">프롤로그 웹툰</a>
+      <a href="#faction-section" class="menu-link">세력</a>
+      <a href="#character-section" class="menu-link">등장인물</a>
+      <a href="#gem-section" class="menu-link">신비의 보석</a>
+    </nav>
+  </aside>
+
+  <!-- 메인 화면: 정중앙 현상수배서 포스터 -->
   <section id="main-section">
     <div class="poster-wrapper">
       <div class="poster-box">
@@ -319,20 +377,36 @@
     </div>
   </section>
 
-  <!-- 2번 화면: 프롬프트 섹션 -->
-  <section id="prompt-section">
+  <!-- 1. 세계관 (프롬프트 영역) -->
+  <section id="world-section">
     <div class="content-box">
       <h2>세계관 & 프롬프트</h2>
       <p>1930년대 무법의 시대를 배경으로 한 설정과 프롬프트 공간입니다.</p>
       <div class="prompt-area" id="prompt-text">[1930: 무법의 시대]
-이곳에 원하시는 프롬프트 내용을 입력해 주세요.</div>
+이곳에 원하시는 세계관 및 프롬프트 내용을 입력해 주세요.</div>
     </div>
   </section>
 
-  <!-- 3번 화면: 캐릭터 섹션 -->
+  <!-- 2. 프롤로그 웹툰 -->
+  <section id="webtoon-section">
+    <div class="content-box">
+      <h2>프롤로그 웹툰</h2>
+      <p>프롤로그 웹툰 이미지나 이야기를 배치하는 공간입니다.</p>
+    </div>
+  </section>
+
+  <!-- 3. 세력 -->
+  <section id="faction-section">
+    <div class="content-box">
+      <h2>세력</h2>
+      <p>무법의 시대를 지배하는 주요 조직과 세력 소개 공간입니다.</p>
+    </div>
+  </section>
+
+  <!-- 4. 등장인물 -->
   <section id="character-section">
     <div class="content-box">
-      <h2>주요 수배자 명단</h2>
+      <h2>등장인물</h2>
       <p>주요 등장인물과 현상수배 전단입니다.</p>
       <div style="margin-top: 20px;">
         <img src="wanted.png.jpg" alt="캐릭터 이미지" style="max-width: 100%; width: 280px; border: 3px solid #8c6d46;">
@@ -340,68 +414,11 @@
     </div>
   </section>
 
-  <!-- 오른쪽 하단 고정 음악 버튼 -->
-  <button type="button" id="music-btn" class="music-toggle">🔇 음악 켜기</button>
+  <!-- 5. 신비의 보석 -->
+  <section id="gem-section">
+    <div class="content-box">
+      <h2>신비의 보석</h2>
+      <p>모든 세력이 노리는 신비의 보석에 대한 비밀을 담는 공간입니다.</p>
+    </div>
+  </section>
 
-  <script>
-    // 1. 메뉴 버튼 연결
-    const menuBtn = document.getElementById('menu-btn');
-    const dropdownMenu = document.getElementById('dropdown-menu');
-
-    menuBtn.addEventListener('click', function() {
-      dropdownMenu.classList.toggle('open');
-    });
-
-    document.querySelectorAll('.menu-link').forEach(function(link) {
-      link.addEventListener('click', function() {
-        dropdownMenu.classList.remove('open');
-      });
-    });
-
-    // 2. 오디오 초기화 (에러가 나도 나머지 기능은 정상 작동하도록 보호)
-    let audioCtx = null;
-
-    function initAudio() {
-      try {
-        if (!audioCtx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) {
-            audioCtx = new AudioContext();
-          }
-        }
-        if (audioCtx && audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-      } catch (e) {
-        console.log('Audio init skipped:', e);
-      }
-    }
-
-    function playStampSound() {
-      try {
-        initAudio();
-        if (!audioCtx) return;
-
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.15);
-
-        gain.gain.setValueAtTime(1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.18);
-      } catch (e) {
-        console.log('Stamp sound skipped:', e);
-      }
-    }
-
-    // 3. 프롬프트 열기 & 캐릭터 보기 버튼 이벤트 직접 연결
-    function handleAction(targetId) {
-      dropdownMenu.classList.remove('open');
