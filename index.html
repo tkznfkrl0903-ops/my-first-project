@@ -54,7 +54,7 @@ function rc(){
   var s=(cp-1)*4,p=f.slice(s,s+4),g=document.getElementById('cg');g.innerHTML='';
   for(var i=0;i<p.length;i++){
     var d=p[i],idx=ch.indexOf(d);
-    g.innerHTML+='<div class="cc" onclick="om2('+idx+')"><div class="chead"><h3>'+d.n+'</h3><span>'+d.r+'</span></div><img src="'+d.i+'"><div class="cmeta"><div class="cbox">'+d.a+'</div><div class="cbox">'+d.g+'</div><div class="cbox">'+d.p+'</div></div><div class="cdesc">'+d.d+'</div></div>';
+    g.innerHTML+='<div class="cc" onclick="om2('+idx+')"><div class="chead"><h3>'+d.n+'</h3><span>'+d.r+'</span></div><img src="'+d.i+'" style="margin-bottom:0"></div>';
   }
   document.getElementById('pgi').textContent=cp+' / '+tp;
 }
