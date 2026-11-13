@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>1930: 무법의 시대</title>
   <style>
-    /* 기본 설정 및 폰트 */
     * {
       margin: 0;
       padding: 0;
@@ -13,7 +12,7 @@
     }
 
     html {
-      scroll-behavior: smooth; /* 부드러운 스크롤 이동 */
+      scroll-behavior: smooth;
     }
 
     body {
@@ -23,53 +22,97 @@
       overflow-x: hidden;
     }
 
-    /* 1. 상단 고정 헤더 및 하단 선 */
+    /* 1. 상단 고정 헤더 및 선 */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 70px;
-      background-color: rgba(18, 14, 10, 0.92);
-      border-bottom: 2px solid #8c6d46; /* 상단 고정 선 */
+      height: 65px;
+      background-color: rgba(18, 14, 10, 0.95);
+      border-bottom: 2px solid #8c6d46;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 40px;
+      padding: 0 20px;
       z-index: 1000;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: bold;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       color: #d4af37;
       text-shadow: 2px 2px 4px #000;
+      white-space: nowrap;
     }
 
-    nav ul {
-      list-style: none;
+    /* 오른쪽 상단 선 3개(햄버거) 버튼 */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
       display: flex;
-      gap: 30px;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      padding: 0;
+      z-index: 1100;
     }
 
-    nav ul li a {
+    .hamburger-btn span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: #d4af37;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* 선 3개 눌렀을 때 펼쳐지는 드롭다운 메뉴 */
+    .dropdown-menu {
+      position: fixed;
+      top: 65px;
+      right: 0;
+      width: 200px;
+      background-color: rgba(24, 18, 13, 0.98);
+      border-left: 2px solid #8c6d46;
+      border-bottom: 2px solid #8c6d46;
+      display: none;
+      flex-direction: column;
+      z-index: 1050;
+      box-shadow: -5px 10px 20px rgba(0, 0, 0, 0.9);
+    }
+
+    .dropdown-menu.open {
+      display: flex;
+    }
+
+    .dropdown-menu a {
+      padding: 16px 24px;
       text-decoration: none;
       color: #e6d8c3;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: bold;
-      transition: color 0.3s;
+      border-bottom: 1px solid #3d2e1e;
+      transition: background-color 0.2s, color 0.2s;
     }
 
-    nav ul li a:hover {
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-menu a:hover, .dropdown-menu a:active {
+      background-color: #3a2a1d;
       color: #d4af37;
     }
 
-    /* 섹션 공통 레이아웃 (위아래 휠 이동) */
+    /* 섹션 공통 레이아웃 */
     section {
       min-height: 100vh;
-      padding-top: 90px;
+      padding: 85px 15px 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -88,29 +131,30 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: 450px;
+      max-width: 400px;
       width: 90%;
     }
 
     .poster-img {
       width: 100%;
       height: auto;
-      border: 6px solid #4a3520;
+      border: 5px solid #4a3520;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
       border-radius: 4px;
     }
 
-    /* 포스터 위/아래 버튼 배치 */
     .action-buttons {
       display: flex;
-      gap: 20px;
-      margin-top: 25px;
+      gap: 15px;
+      margin-top: 22px;
       z-index: 10;
+      width: 100%;
+      justify-content: center;
     }
 
     .btn-1930 {
-      padding: 14px 28px;
-      font-size: 1.1rem;
+      padding: 12px 20px;
+      font-size: 1rem;
       font-weight: bold;
       color: #120e0a;
       background-color: #d4af37;
@@ -119,11 +163,12 @@
       cursor: pointer;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
       transition: transform 0.2s, background-color 0.2s;
+      flex: 1;
+      max-width: 160px;
     }
 
     .btn-1930:hover {
       background-color: #f0c94d;
-      transform: translateY(-2px);
     }
 
     .btn-1930.secondary {
@@ -131,28 +176,23 @@
       color: #e6d8c3;
     }
 
-    .btn-1930.secondary:hover {
-      background-color: #523c2a;
-    }
-
-    /* 3. 네모 도장 애니메이션 효과 */
+    /* 3. 네모 도장 애니메이션 */
     .stamp {
       position: absolute;
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%) scale(3) rotate(-12deg);
-      border: 6px solid #b81d13;
+      border: 5px solid #b81d13;
       color: #b81d13;
-      font-size: 2.8rem;
+      font-size: 2.3rem;
       font-weight: 900;
-      padding: 10px 30px;
-      letter-spacing: 5px;
-      background-color: rgba(184, 29, 19, 0.12);
+      padding: 8px 24px;
+      letter-spacing: 4px;
+      background-color: rgba(184, 29, 19, 0.15);
       opacity: 0;
       pointer-events: none;
       z-index: 20;
-      text-transform: uppercase;
-      box-shadow: 0 0 15px rgba(184, 29, 19, 0.4);
+      white-space: nowrap;
     }
 
     .stamp.stamped {
@@ -174,13 +214,13 @@
       }
     }
 
-    /* 4. 아래 섹션 (프롬프트 & 캐릭터 소개 영역) */
+    /* 4. 프롬프트 & 캐릭터 섹션 */
     .content-box {
-      max-width: 800px;
-      width: 90%;
+      max-width: 750px;
+      width: 95%;
       background-color: #1c1610;
       border: 2px solid #5e472c;
-      padding: 40px;
+      padding: 30px 20px;
       border-radius: 6px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
@@ -188,8 +228,8 @@
 
     .content-box h2 {
       color: #d4af37;
-      font-size: 2rem;
-      margin-bottom: 20px;
+      font-size: 1.6rem;
+      margin-bottom: 15px;
       border-bottom: 1px solid #5e472c;
       padding-bottom: 10px;
     }
@@ -197,34 +237,35 @@
     .prompt-area {
       background-color: #120e0a;
       border: 1px solid #8c6d46;
-      padding: 20px;
+      padding: 18px;
       color: #cbbba0;
       font-family: monospace;
       text-align: left;
       line-height: 1.6;
       margin-top: 15px;
       white-space: pre-wrap;
+      font-size: 0.95rem;
     }
 
     /* 5. 우측 하단 고정 음악 버튼 */
     .music-toggle {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
+      bottom: 25px;
+      right: 20px;
       background-color: #2b2016;
       color: #d4af37;
       border: 2px solid #d4af37;
-      padding: 12px 20px;
+      padding: 12px 18px;
       border-radius: 30px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: bold;
       cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-      transition: all 0.3s;
+      z-index: 2000;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+      transition: all 0.2s;
     }
 
-    .music-toggle:hover {
+    .music-toggle.playing {
       background-color: #d4af37;
       color: #120e0a;
     }
@@ -232,28 +273,31 @@
 </head>
 <body>
 
-  <!-- 상단 고정 헤더 및 선 -->
+  <!-- 상단 고정 헤더 -->
   <header>
     <div class="logo">1930: 무법의 시대</div>
-    <nav>
-      <ul>
-        <li><a href="#main-section">현상수배</a></li>
-        <li><a href="#prompt-section">프롬프트</a></li>
-        <li><a href="#character-section">캐릭터</a></li>
-      </ul>
-    </nav>
+    <!-- 선 3개 메뉴 버튼 -->
+    <button class="hamburger-btn" onclick="toggleMenu()" aria-label="메뉴 열기">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
+
+  <!-- 선 3개 누르면 나오는 메뉴 3개 -->
+  <nav id="dropdown-menu" class="dropdown-menu">
+    <a href="#main-section" onclick="closeMenu()">현상수배</a>
+    <a href="#prompt-section" onclick="closeMenu()">프롬프트</a>
+    <a href="#character-section" onclick="closeMenu()">캐릭터</a>
+  </nav>
 
   <!-- 1번 화면: 정중앙 현상수배서 포스터 -->
   <section id="main-section">
     <div class="poster-wrapper">
-      <!-- 업로드하신 poster.png 불러오기 -->
       <img src="poster.png" alt="현상수배서 포스터" class="poster-img">
       
-      <!-- 클릭 시 찍히는 네모 도장 -->
       <div id="stamp-box" class="stamp">수배 개시</div>
 
-      <!-- 포스터 하단 버튼 2개 -->
       <div class="action-buttons">
         <button class="btn-1930" onclick="triggerStampAndScroll('prompt-section')">프롬프트 열기</button>
         <button class="btn-1930 secondary" onclick="triggerStampAndScroll('character-section')">캐릭터 보기</button>
@@ -266,11 +310,8 @@
     <div class="content-box">
       <h2>세계관 & 프롬프트</h2>
       <p>1930년대 무법의 시대를 배경으로 한 설정과 프롬프트 공간입니다.</p>
-      <div class="prompt-area" id="prompt-text">
-[1930: 무법의 시대]
-이곳에 원하시는 프롬프트 내용이나 시나리오 설정을 자유롭게 적어 넣으세요.
-버튼을 누르면 도장이 찍히는 소리와 함께 이곳으로 자동 스크롤됩니다.
-      </div>
+      <div class="prompt-area" id="prompt-text">[1930: 무법의 시대]
+이곳에 원하시는 프롬프트 내용을 입력해 주세요.</div>
     </div>
   </section>
 
@@ -278,29 +319,46 @@
   <section id="character-section">
     <div class="content-box">
       <h2>주요 수배자 명단</h2>
-      <p>이곳에 올리신 다른 이미지(title.png.png, wanted.png.jpg 등)나 캐릭터 설명을 배치할 수 있습니다.</p>
+      <p>주요 등장인물과 현상수배 전단입니다.</p>
       <div style="margin-top: 20px;">
-        <img src="wanted.png.jpg" alt="캐릭터 이미지" style="max-width: 300px; border: 3px solid #8c6d46;">
+        <img src="wanted.png.jpg" alt="캐릭터 이미지" style="max-width: 100%; width: 280px; border: 3px solid #8c6d46;">
       </div>
     </div>
   </section>
 
-  <!-- 오른쪽 하단 고정 음악 켜기/끄기 버튼 -->
+  <!-- 오른쪽 하단 고정 음악 버튼 -->
   <button id="music-btn" class="music-toggle" onclick="toggleMusic()">🔇 음악 켜기</button>
 
-  <!-- 배경음악 오디오 (무료 퍼블릭 도메인 클래식/느와르풍 음원 연결) -->
-  <audio id="bgm" loop>
-    <source src="https://google.com" type="audio/ogg">
-  </audio>
-
   <script>
-    // 1. 도장 찍히는 효과음 생성 (별도 mp3 파일 없이 즉시 소리 재생)
+    // 1. 햄버거(선 3개) 메뉴 열기/닫기
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    function toggleMenu() {
+      dropdownMenu.classList.toggle('open');
+    }
+
+    function closeMenu() {
+      dropdownMenu.classList.remove('open');
+    }
+
+    // 2. 오디오 컨텍스트 (도장 소리 & 배경음악 공용)
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // 도장 찍히는 소리
     function playStampSound() {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      initAudio();
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
 
-      // 묵직한 타격음 주파수 설정
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(140, audioCtx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.15);
@@ -315,19 +373,17 @@
       osc.stop(audioCtx.currentTime + 0.18);
     }
 
-    // 2. 버튼 클릭 시 도장 찍기 + 소리 재생 + 해당 섹션으로 부드럽게 내려가기
+    // 버튼 클릭 시 도장 찍기 + 아래로 휠 이동
     function triggerStampAndScroll(targetId) {
+      closeMenu();
       const stamp = document.getElementById('stamp-box');
       
-      // 애니메이션 초기화 후 재실행
       stamp.classList.remove('stamped');
-      void stamp.offsetWidth; // 리플로우 강제 실행
+      void stamp.offsetWidth;
       stamp.classList.add('stamped');
 
-      // 도장 소리 재생
       playStampSound();
 
-      // 도장이 찍히는 모습을 잠깐 보여준 뒤(0.6초 후) 아래로 이동
       setTimeout(() => {
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
@@ -336,25 +392,12 @@
       }, 600);
     }
 
-    // 3. 오른쪽 하단 배경음악 켜기 / 끄기 기능
-    const bgm = document.getElementById('bgm');
-    const musicBtn = document.getElementById('music-btn');
+    // 3. 음악 켜기 / 끄기 (외부 파일 차단 없는 1930년대 느와르 재즈 코드 루프)
     let isPlaying = false;
+    let bgmInterval = null;
+    const musicBtn = document.getElementById('music-btn');
 
-    function toggleMusic() {
-      if (isPlaying) {
-        bgm.pause();
-        musicBtn.textContent = '🔇 음악 켜기';
-        isPlaying = false;
-      } else {
-        bgm.play().then(() => {
-          musicBtn.textContent = '🔊 음악 끄기';
-          isPlaying = true;
-        }).catch(err => {
-          alert('브라우저 정책으로 인해 화면을 한 번 클릭한 후 음악을 켜주세요.');
-        });
-      }
-    }
-  </script>
-</body>
-</html>
+    // 어둡고 분위기 있는 1930년대 재즈 코드 진행 (Dm9 -> G13 -> Cmaj9 -> A7b9)
+    const chords = [
+      [146.83, 174.61, 220.00, 261.63, 329.63], // Dm9
+      [196.00, 246.94, 349.23, 440.00, 659.25], // G13
